@@ -1,0 +1,17 @@
+{
+    "selectedChart": "",
+    "charts": [
+        {
+            "id": "CO10",
+            "name": "Plan CO10"
+        },
+        {
+            "id": "CO11",
+            "name": "Plan CO11"
+        },
+        {
+            "id": "CO12",
+            "name": "Plan CO12"
+        }
+    ]
+}

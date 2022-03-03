@@ -1,0 +1,50 @@
+_schema-version: "3.2"
+ID: conscuentas2
+version: 0.0.1
+modules:
+- name: conscuentas2-approuter
+  type: approuter.nodejs
+  path: conscuentas2-approuter
+  requires:
+  - name: conscuentas2_html_repo_runtime
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: conscuentas2_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: conscuentas2_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - cuentasui5-content.zip
+      name: cuentasui5
+      target-path: resources/
+- name: cuentasui5
+  type: html5
+  path: cuentasui5
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: conscuentas2_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: conscuentas2_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

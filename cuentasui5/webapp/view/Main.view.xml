@@ -1,0 +1,112 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="egb.cuentasui5.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page"
+                    title="{i18n>title}">
+                    <content>
+                        <Wizard id="CreateProductWizard"
+                            class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+                            complete="wizardCompletedHandler">
+                            <WizardStep id="step1"
+                                title="Descripción de la consulta"
+                                validated="false">
+                                <MessageStrip id="mstrip1"
+                                    class="sapUiSmallMarginBottom"
+                                    text="Digite los datos básicos de la consulta"
+                                    showIcon="true"/>
+
+                                <f:SimpleForm id="sform1"
+                                    editable="true">
+                                    <Label id="lab1"
+                                        text="{i18n>employeeName}"/>
+                                    <Input id="inp1"
+                                        value="{paramModel>/employeeName}"
+                                        width="300px"
+                                        placeholder="{i18n>employeeNamePH}"
+                                        liveChange="onValidateStep1"/>
+                                    <Label id='lab2'
+                                        text="{i18n>description}"/>
+                                    <TextArea id="txa1"
+                                        value="{paramModel>/description}"
+                                        valueLiveUpdate="true"
+                                        liveChange="onValidateStep1"
+                                        width="80%"
+                                        maxLength="150"
+                                        showExceededText="true"/>
+                                </f:SimpleForm>
+                            </WizardStep>
+                            <WizardStep id="step2"
+                                title="parámetros de selección"
+                                validated="true">
+                                <MessageStrip id="mstrip2"
+                                    class="sapUiSmallMarginBottom"
+                                    text="Digite los parámetros"
+                                    showIcon="true"/>
+                                <f:SimpleForm id="sf2"
+                                    editable="true">
+                                    <Label id="lb3"
+                                        text="{i18n>charts}"/>
+                                    <Select id="sel1"
+                                        selectedKey="{chartsModel>/selectedChart}"
+                                        items="{chartsModel>/charts}"
+                                        forceSelection="false"
+                                        width="200px"
+                                        change="onValidateChart">
+                                        <items>
+                                            <core:Item id="it1"
+                                                key="{chartsModel>id}"
+                                                text="{chartsModel>name}"/>
+                                        </items>
+                                    </Select>
+                                    <Label text="Grupos"/>
+                                    <MultiComboBox selectionChange="handleSelectionChange"
+                                        selectionFinish="handleSelectionFinish"
+                                        width="350px"
+                                        items="{groupsModel>/groups}">
+                                        <core:Item key="{groupsModel>id}"
+                                            text="{groupsModel>description}"/>
+                                    </MultiComboBox>
+                                    <Label text="Moneda"/>
+                                    <Select id="sel2"
+                                        selectedKey="{currModel>/monedaSeleccionada}"
+                                        items="{currModel>/monedas}"
+                                        forceSelection="false"
+                                        width="200px"
+                                        change="onValidateCurr">
+                                        <items>
+                                            <core:Item id="it2"
+                                                key="{currModel>id}"
+                                                text="{currModel>nombre}"/>
+                                        </items>
+                                    </Select>
+                                    <Label text="Fecha"/>
+                                    <DatePicker id="dp1"
+                                        placeholder="Fecha de consulta"
+                                        width="250px"
+                                        change="handleChangeDate"/>
+                                </f:SimpleForm>
+                            </WizardStep>
+                            <WizardStep id="step3"
+                                title="Selección de campos"
+                                validated="true">
+                                <MessageStrip id="mstrip3"
+                                    class="sapUiSmallMarginBottom"
+                                    text="Digite los datos básicos de la consulta"
+                                    showIcon="true"/>
+                                <Text id="txt11"
+                                    class="sapUiSmallMarginBottom"
+                                    text="aaa"/>
+                            </WizardStep>
+                        </Wizard>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

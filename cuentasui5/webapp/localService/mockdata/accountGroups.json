@@ -1,0 +1,25 @@
+{
+    "selectedGroups": [],
+    "groups": [
+        {
+            "id": "GL",
+            "description": "Contabilidad general"
+        },
+        {
+            "id": "CASH",
+            "description": "Efectivo"
+        },
+        {
+            "id": "GRP1",
+            "description": "Grupo 1"
+        },
+        {
+            "id": "GRP2",
+            "description": "Grupo 2"
+        },
+        {
+            "id": "GRP3",
+            "description": "Grupo 3"
+        }
+    ]
+}

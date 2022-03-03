@@ -1,0 +1,13 @@
+{
+    "monedaSeleccionada": "",
+    "monedas": [
+        {
+            "id": "COP",
+            "nombre": "Pesos colombianos"
+        },
+        {
+            "id": "USD",
+            "nombre": "Dólares"
+        }
+    ]
+}
