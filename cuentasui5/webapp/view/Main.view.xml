@@ -10,7 +10,7 @@
                 <Page id="page"
                     title="{i18n>title}">
                     <content>
-                        <Wizard id="CreateProductWizard"
+                        <Wizard id="wizard"
                             class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
                             complete="wizardCompletedHandler">
                             <WizardStep id="step1"
@@ -29,7 +29,8 @@
                                         value="{paramModel>/employeeName}"
                                         width="300px"
                                         placeholder="{i18n>employeeNamePH}"
-                                        liveChange="onValidateStep1"/>
+                                        liveChange="onValidateStep1"
+                                        required="true"/>
                                     <Label id='lab2'
                                         text="{i18n>description}"/>
                                     <TextArea id="txa1"
@@ -43,7 +44,7 @@
                             </WizardStep>
                             <WizardStep id="step2"
                                 title="parámetros de selección"
-                                validated="true">
+                                validated="false">
                                 <MessageStrip id="mstrip2"
                                     class="sapUiSmallMarginBottom"
                                     text="Digite los parámetros"
@@ -66,7 +67,7 @@
                                     </Select>
                                     <Label text="Grupos"/>
                                     <MultiComboBox selectionChange="handleSelectionChange"
-                                        selectionFinish="handleSelectionFinish"
+                                        selectionFinish="handleSelectionGroups"
                                         width="350px"
                                         items="{groupsModel>/groups}">
                                         <core:Item key="{groupsModel>id}"
