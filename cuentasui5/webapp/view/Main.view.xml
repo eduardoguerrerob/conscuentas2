@@ -2,6 +2,7 @@
     controllerName="egb.cuentasui5.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.ui.layout.form"
+    xmlns:table="sap.ui.table"
     displayBlock="true"
     xmlns="sap.m">
     <Shell id="shell">
@@ -20,6 +21,36 @@
                                     class="sapUiSmallMarginBottom"
                                     text="Digite los datos básicos de la consulta"
                                     showIcon="true"/>
+
+                                <!-- <FlexBox direction="Row"
+                                    height="200px"
+                                    alignItems="Center"
+                                    justifyContent="SpaceBetween">
+                                    <items>
+                                        <HBox >
+                                            <Button text="1"
+                                                type="Emphasized"
+                                                class="sapUiSmallMarginEnd" />
+                                            <Button text="2"
+                                                type="Reject"
+                                                class="sapUiSmallMarginEnd" />
+                                            <Button text="3"
+                                                type="Accept" />
+                                        </HBox>
+                                        <HBox >
+                                            <Button text="4"
+                                                type="Emphasized"
+                                                class="sapUiSmallMarginEnd" />
+                                            <Button text="5"
+                                                type="Reject"
+                                                class="sapUiSmallMarginEnd" />
+                                            <Button text="6"
+                                                type="Accept" />
+                                        </HBox>
+                                    </items>
+
+                                </FlexBox> -->
+
 
                                 <f:SimpleForm id="sform1"
                                     editable="true">
@@ -100,9 +131,37 @@
                                     class="sapUiSmallMarginBottom"
                                     text="Digite los datos básicos de la consulta"
                                     showIcon="true"/>
-                                <Text id="txt11"
-                                    class="sapUiSmallMarginBottom"
-                                    text="aaa"/>
+                                
+                                <FlexBox direction="Row"
+                                        justifyContent="SpaceAround"
+                                        alignItems="Center">
+                                    <items>
+                                        <HBox width="30%">
+                                            <table:Table id="tb1" selectionMode="MultiToggle"
+                                            rows="{fieldModel>/fields}"
+                                            visibleRowCount="5"
+                                            rowSelectionChange="onValidateStep3">
+                                                <table:columns>
+                                                    <table:Column >
+                                                            <Label text="Campo"/>
+                                                            <table:template>
+                                                                <Text text="{fieldModel>name}" wrapping="false"/>
+                                                            </table:template>
+                                                    </table:Column>
+                                                </table:columns>
+                                            </table:Table>
+                                        </HBox>
+                                        <HBox >
+                                            <FlexBox justifyContent="Center"
+                                                    alignContent="Center">
+                                                <items>
+                                                    <Button text="Ver Descripción"/>
+                                                </items>
+                                            </FlexBox>
+                                        </HBox>
+                                    </items>
+                                </FlexBox>
+
                             </WizardStep>
                         </Wizard>
                     </content>

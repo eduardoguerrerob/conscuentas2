@@ -13,6 +13,7 @@ sap.ui.define([
         const chartsModel = new JSONModel();
         const groupsModel = new JSONModel();
         const currModel = new JSONModel();
+        const fieldModel = new JSONModel();
 
         function onInit() {
             paramModel.loadData("./localService/mockdata/params.json", "false");
@@ -26,6 +27,9 @@ sap.ui.define([
 
             currModel.loadData("./localService/mockdata/currency.json", "false");
             this.getView().setModel(currModel, "currModel");
+
+            fieldModel.loadData("./localService/mockdata/fields.json", "false");
+            this.getView().setModel(fieldModel, "fieldModel");
         }
 
         function onBeforeRendering(){
@@ -126,6 +130,21 @@ sap.ui.define([
                }
         }
 
+        function onValidateStep3(oEvent){
+            const fields = fieldModel.getProperty("/fields");
+            let selectedFields = [];
+            const indices = this.getView().byId("tb1").getSelectedIndices();
+            fieldModel.setProperty("/selectedFields", []);
+
+            if(indices){
+                for(let i in indices){
+                    let idx = parseInt(i);
+                    selectedFields.push(fields[idx].id);
+                }
+                fieldModel.setProperty("/selectedFields", selectedFields);
+            }
+        }
+
 
         const Main = Controller.extend("egb.cuentasui5.controller.Main", {});
         Main.prototype.onBeforeRendering = onBeforeRendering;
@@ -136,6 +155,7 @@ sap.ui.define([
         Main.prototype.handleSelectionGroups = handleSelectionGroups;
         Main.prototype.onValidateCurr = onValidateCurr;
         Main.prototype.handleChangeDate = handleChangeDate;
+        Main.prototype.onValidateStep3 = onValidateStep3;
 
 
         return Main

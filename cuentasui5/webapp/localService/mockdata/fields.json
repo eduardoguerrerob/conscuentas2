@@ -1,0 +1,33 @@
+{
+    "selectedFields": [],
+    "fields": [
+        {
+            "id": "chart",
+            "name": "plan de cuentas"
+        },
+        {
+            "id": "company",
+            "name": "sociedad"
+        },
+        {
+            "id": "text",
+            "name": "texto breve"
+        },
+        {
+            "id": "description",
+            "name": "texto explicativo"
+        },
+        {
+            "id": "category",
+            "name": "categoría fiscal"
+        },
+        {
+            "id": "accblock",
+            "name": "bloqueo plan de cuentas"
+        },
+        {
+            "id": "compblock",
+            "name": "bloqueo sociedad "
+        }
+    ]
+}
