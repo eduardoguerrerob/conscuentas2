@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="descriptionDialog"
+        contentWidth="600px">
+        <TextArea editable="false"
+            value="{paramModel>/description}"
+            valueLiveUpdate="true"
+            width="80%"
+            maxLength="150"
+            showExceededText="true"/>
+        <endButton>
+            <Button text="{i18n>closeDescriptionDialog}" press="onCloseDescription"/>
+        </endButton>    
+    </Dialog>
+</core:FragmentDefinition> 

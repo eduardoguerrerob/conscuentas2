@@ -22,30 +22,17 @@
                                     text="Digite los datos básicos de la consulta"
                                     showIcon="true"/>
 
-                                <!-- <FlexBox direction="Row"
-                                    height="200px"
-                                    alignItems="Center"
-                                    justifyContent="SpaceBetween">
+                                <!-- <FlexBox direction="Row" height="200px" alignItems="Center" justifyContent="SpaceBetween">
                                     <items>
                                         <HBox >
-                                            <Button text="1"
-                                                type="Emphasized"
-                                                class="sapUiSmallMarginEnd" />
-                                            <Button text="2"
-                                                type="Reject"
-                                                class="sapUiSmallMarginEnd" />
-                                            <Button text="3"
-                                                type="Accept" />
+                                            <Button text="1" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                            <Button text="2" type="Reject" class="sapUiSmallMarginEnd" />
+                                            <Button text="3" type="Accept" />
                                         </HBox>
                                         <HBox >
-                                            <Button text="4"
-                                                type="Emphasized"
-                                                class="sapUiSmallMarginEnd" />
-                                            <Button text="5"
-                                                type="Reject"
-                                                class="sapUiSmallMarginEnd" />
-                                            <Button text="6"
-                                                type="Accept" />
+                                            <Button text="4" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                            <Button text="5" type="Reject" class="sapUiSmallMarginEnd" />
+                                            <Button text="6" type="Accept" />
                                         </HBox>
                                     </items>
 
@@ -80,6 +67,13 @@
                                     class="sapUiSmallMarginBottom"
                                     text="Digite los parámetros"
                                     showIcon="true"/>
+
+                                <!-- <core:Fragment fragmentName="egb.cuentasui5.fragment.descriptionReport"
+                                    type="XML"/>
+
+                                <core:Fragment fragmentName="egb.cuentasui5.fragment.descriptionReport"
+                                    type="XML"/> -->
+
                                 <f:SimpleForm id="sf2"
                                     editable="true">
                                     <Label id="lb3"
@@ -131,31 +125,33 @@
                                     class="sapUiSmallMarginBottom"
                                     text="Digite los datos básicos de la consulta"
                                     showIcon="true"/>
-                                
+
                                 <FlexBox direction="Row"
-                                        justifyContent="SpaceAround"
-                                        alignItems="Center">
+                                    justifyContent="SpaceAround"
+                                    alignItems="Center">
                                     <items>
                                         <HBox width="30%">
-                                            <table:Table id="tb1" selectionMode="MultiToggle"
-                                            rows="{fieldModel>/fields}"
-                                            visibleRowCount="5"
-                                            rowSelectionChange="onValidateStep3">
+                                            <table:Table id="tb1"
+                                                selectionMode="MultiToggle"
+                                                rows="{fieldModel>/fields}"
+                                                visibleRowCount="5"
+                                                rowSelectionChange="onValidateStep3">
                                                 <table:columns>
                                                     <table:Column >
-                                                            <Label text="Campo"/>
-                                                            <table:template>
-                                                                <Text text="{fieldModel>name}" wrapping="false"/>
-                                                            </table:template>
+                                                        <Label text="Campo"/>
+                                                        <table:template>
+                                                            <Text text="{fieldModel>name}"
+                                                                wrapping="false"/>
+                                                        </table:template>
                                                     </table:Column>
                                                 </table:columns>
                                             </table:Table>
                                         </HBox>
                                         <HBox >
                                             <FlexBox justifyContent="Center"
-                                                    alignContent="Center">
+                                                alignContent="Center">
                                                 <items>
-                                                    <Button text="Ver Descripción"/>
+                                                    <Button text="Ver Descripción" press="onShowDescription"/>
                                                 </items>
                                             </FlexBox>
                                         </HBox>

@@ -1,12 +1,15 @@
+// @ts-nocheck
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.ui.core.Fragment} Fragment
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         const paramModel = new JSONModel();
@@ -21,7 +24,7 @@ sap.ui.define([
 
             chartsModel.loadData("./localService/mockdata/chartOfAccount.json", "false");
             this.getView().setModel(chartsModel, "chartsModel");
-        
+
             groupsModel.loadData("./localService/mockdata/accountGroups.json", "false");
             this.getView().setModel(groupsModel, "groupsModel");
 
@@ -32,20 +35,20 @@ sap.ui.define([
             this.getView().setModel(fieldModel, "fieldModel");
         }
 
-        function onBeforeRendering(){
-           this._wizard =  this.getView().byId("wizard");
-           this._oFirstStep = this._wizard.getSteps()[0];
-           this._oSecondStep = this._wizard.getSteps()[1];
-           this._oThirdStep = this._wizard.getSteps()[2];
-           this._wizard.discardProgress(this._oFirstStep);
-           this._wizard.goToStep(this._oFirstStep);
-           this._oFirstStep.setValidated(false);
+        function onBeforeRendering() {
+            this._wizard = this.getView().byId("wizard");
+            this._oFirstStep = this._wizard.getSteps()[0];
+            this._oSecondStep = this._wizard.getSteps()[1];
+            this._oThirdStep = this._wizard.getSteps()[2];
+            this._wizard.discardProgress(this._oFirstStep);
+            this._wizard.goToStep(this._oFirstStep);
+            this._oFirstStep.setValidated(false);
         }
 
-        function onValidateStep1(oEvent){
+        function onValidateStep1(oEvent) {
             const name = this.getView().byId("inp1").getValue();
             const description = this.getView().byId("txa1").getValue();
-            if( name != '' && name != undefined && description != '' && description != undefined){
+            if (name != '' && name != undefined && description != '' && description != undefined) {
                 // actualizar paramModel
                 paramModel.setProperty("/employeeName", name);
                 paramModel.setProperty("/description", description);
@@ -54,7 +57,7 @@ sap.ui.define([
                 // steps[0].setValidated(true);
                 this._oFirstStep.setValidated(true);
             }
-            else{
+            else {
                 // paramModel.setProperty("/employeeName", "");
                 // paramModel.setProperty("/description", "");
                 //const steps = this.getView().byId("CreateProductWizard").getSteps();
@@ -62,7 +65,7 @@ sap.ui.define([
             }
         }
 
-        function onValidateChart(oEvent){
+        function onValidateChart(oEvent) {
             // traer el valor y actualizar modelo de parametros
             const chart = chartsModel.getProperty("/selectedChart");
             paramModel.setProperty("/chart", chart);
@@ -71,16 +74,16 @@ sap.ui.define([
             _validateStep2(this);
         }
 
-        function handleSelectionChange(){
+        function handleSelectionChange() {
 
         }
 
-        function handleSelectionGroups(oEvent){
+        function handleSelectionGroups(oEvent) {
             // traer el valor y actualizar modelo de parametros
             let groups = [];
             groupsModel.setProperty("/selectedGroups", []);
             var selectItems = oEvent.getParameter("selectedItems");
-            for(var i in selectItems){
+            for (var i in selectItems) {
                 groups.push(selectItems[i].getKey());
             }
             groupsModel.setProperty("/selectedGroups", groups);
@@ -103,10 +106,10 @@ sap.ui.define([
             // traer el valor y actualizar modelo de parametros
             const sValue = oEvent.getParameter("value");
             const bValid = oEvent.getParameter("valid");
-            if(bValid){
+            if (bValid) {
                 paramModel.setProperty("/date", sValue);
             }
-            else{
+            else {
                 paramModel.setProperty("/date", "");
             }
 
@@ -114,30 +117,30 @@ sap.ui.define([
             _validateStep2(this);
         }
 
-        function _validateStep2(that){
+        function _validateStep2(that) {
             const params = paramModel.getData();
 
-            if(params.chart !== "" && params.chart !== undefined &&  
-               params.groups !== undefined && params.groups.length > 0 &&
-               params.currency !== undefined && params.currency !== "" &&
-               params.date !== undefined && params.date !== "" ){
-                
+            if (params.chart !== "" && params.chart !== undefined &&
+                params.groups !== undefined && params.groups.length > 0 &&
+                params.currency !== undefined && params.currency !== "" &&
+                params.date !== undefined && params.date !== "") {
+
                 that._oSecondStep.setValidated(true);
-                that._wizard.goToStep(this._oThirdStep);                   
-               }
-               else{
+                that._wizard.goToStep(this._oThirdStep);
+            }
+            else {
                 that._oSecondStep.setValidated(false);
-               }
+            }
         }
 
-        function onValidateStep3(oEvent){
+        function onValidateStep3(oEvent) {
             const fields = fieldModel.getProperty("/fields");
             let selectedFields = [];
             const indices = this.getView().byId("tb1").getSelectedIndices();
             fieldModel.setProperty("/selectedFields", []);
 
-            if(indices){
-                for(let i in indices){
+            if (indices) {
+                for (let i in indices) {
                     let idx = parseInt(i);
                     selectedFields.push(fields[idx].id);
                 }
@@ -145,8 +148,30 @@ sap.ui.define([
             }
         }
 
+        function onShowDescription(oEvent) {
+            const oView = this.getView();
+
+            if (!this.byId("descriptionDialog")) {
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "egb.cuentasui5.fragment.descriptionReport",
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    oDialog.open();
+                });
+            }
+            else{
+                this.byId("descriptionDialog").open();
+            }
+        }
+
+        function onCloseDescription(oEvent) {
+            this.byId("descriptionDialog").close();
+        }
 
         const Main = Controller.extend("egb.cuentasui5.controller.Main", {});
+
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onInit = onInit;
         Main.prototype.onValidateStep1 = onValidateStep1;
@@ -156,7 +181,8 @@ sap.ui.define([
         Main.prototype.onValidateCurr = onValidateCurr;
         Main.prototype.handleChangeDate = handleChangeDate;
         Main.prototype.onValidateStep3 = onValidateStep3;
-
+        Main.prototype.onShowDescription = onShowDescription;
+        Main.prototype.onCloseDescription = onCloseDescription;
 
         return Main
     });
