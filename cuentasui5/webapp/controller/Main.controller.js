@@ -18,7 +18,12 @@ sap.ui.define([
         const currModel = new JSONModel();
         const fieldModel = new JSONModel();
 
+        
+
         function onInit() {
+            this._oNavContainer = this.byId("wizardNavContainer");
+
+
             paramModel.loadData("./localService/mockdata/params.json", "false");
             this.getView().setModel(paramModel, "paramModel");
 
@@ -84,7 +89,8 @@ sap.ui.define([
             groupsModel.setProperty("/selectedGroups", []);
             var selectItems = oEvent.getParameter("selectedItems");
             for (var i in selectItems) {
-                groups.push(selectItems[i].getKey());
+                const grpStr = '{"id":"'+selectItems[i].getKey() +'","description":"'+selectItems[i].getText()+'"}'
+                groups.push(JSON.parse(grpStr));
             }
             groupsModel.setProperty("/selectedGroups", groups);
             paramModel.setProperty("/groups", groups);
@@ -170,6 +176,18 @@ sap.ui.define([
             this.byId("descriptionDialog").close();
         }
 
+        function wizardCompletedHandler() {
+            this._oNavContainer.to(this.byId("wizardReviewPage"));
+        }
+
+        function handleWizardSubmit(oEvent) {
+
+        }
+
+        function handleWizardCancel() {
+
+        }
+
         const Main = Controller.extend("egb.cuentasui5.controller.Main", {});
 
         Main.prototype.onBeforeRendering = onBeforeRendering;
@@ -183,6 +201,9 @@ sap.ui.define([
         Main.prototype.onValidateStep3 = onValidateStep3;
         Main.prototype.onShowDescription = onShowDescription;
         Main.prototype.onCloseDescription = onCloseDescription;
+        Main.prototype.wizardCompletedHandler = wizardCompletedHandler;
+        Main.prototype.handleWizardSubmit = handleWizardSubmit;
+        Main.prototypehandleWizardCancel = handleWizardCancel;
 
         return Main
     });
