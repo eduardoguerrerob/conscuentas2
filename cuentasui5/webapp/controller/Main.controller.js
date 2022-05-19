@@ -2,14 +2,16 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/m/MessageBox"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
      * @param {typeof sap.ui.core.Fragment} Fragment
+     * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, JSONModel, Fragment) {
+    function (Controller, JSONModel, Fragment,MessageBox) {
         "use strict";
 
         const paramModel = new JSONModel();
@@ -22,6 +24,7 @@ sap.ui.define([
 
         function onInit() {
             this._oNavContainer = this.byId("wizardNavContainer");
+            this._oWizardContentPage = this.byId("wizardContentPage");
 
 
             paramModel.loadData("./localService/mockdata/params.json", "false");
@@ -132,7 +135,7 @@ sap.ui.define([
                 params.date !== undefined && params.date !== "") {
 
                 that._oSecondStep.setValidated(true);
-                that._wizard.goToStep(this._oThirdStep);
+                that._wizard.goToStep(that._oThirdStep);
             }
             else {
                 that._oSecondStep.setValidated(false);
@@ -181,11 +184,22 @@ sap.ui.define([
         }
 
         function handleWizardSubmit(oEvent) {
-
+            // go to Result view
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteResult");
         }
 
         function handleWizardCancel() {
-
+            MessageBox["warning"]("Confirma cancelación?",{
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                onClose: function(oAction){
+                    if(oAction === MessageBox.Action.YES){
+                       this._wizard.goToStep(this._oFirstStep);
+                       this._wizard.discardProgress(this._oFirstStep);
+                       this._oNavContainer.backToPage(this._oWizardContentPage.getId());
+                    }
+                }.bind(this)
+           })
         }
 
         const Main = Controller.extend("egb.cuentasui5.controller.Main", {});
@@ -203,7 +217,7 @@ sap.ui.define([
         Main.prototype.onCloseDescription = onCloseDescription;
         Main.prototype.wizardCompletedHandler = wizardCompletedHandler;
         Main.prototype.handleWizardSubmit = handleWizardSubmit;
-        Main.prototypehandleWizardCancel = handleWizardCancel;
+        Main.prototype.handleWizardCancel = handleWizardCancel;
 
         return Main
     });

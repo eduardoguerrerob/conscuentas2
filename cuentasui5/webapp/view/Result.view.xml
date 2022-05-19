@@ -1,0 +1,24 @@
+<mvc:View xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="egb.cuentasui5.controller.Result"
+    displayBlock="true">
+    <Page showNavButton="true"
+        navButtonPress="onNavBack">
+        <Text text="VISTA DE RESULTADOS"/>
+        <sap.ui.comp.smarttable:SmartTable xmlns:sap.ui.comp.smarttable="sap.ui.comp.smarttable"
+            xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+            width="100%"
+            direction="Column"
+            fitContainer="true"
+            tableType="ResponsiveTable"
+            header="Smart Table"
+            enableAutoBinding="true"
+            id="table0"
+            cd:w5g.dt.context="/Products"
+            entitySet="Products"
+            initiallyVisibleFields="ProductID,ProductName,QuantityPerUnit,ReorderLevel"/>
+        <content/>
+    </Page>
+
+</mvc:View>
