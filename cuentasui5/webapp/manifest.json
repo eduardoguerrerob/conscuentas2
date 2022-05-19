@@ -115,7 +115,7 @@
       "targets": {
         "TargetMain": {
           "viewType": "XML",
-          "transition": "slide",
+          "transition": "slide",git
           "clearControlAggregation": false,
           "viewName": "Main"
         },
